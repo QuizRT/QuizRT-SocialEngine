@@ -134,9 +134,9 @@ namespace quizartsocial_backend
         public async Task DeleteFollowsRelationshipInNeo4j(Follower follower)
         {
             var query = graphobj.graph.Cypher
-                .Merge("(u:User { userId: {userId}, userName: {userName} })")
-                .Merge("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
-                .Merge("(u)-[r:follows]->(t)")
+                .Match("(u:User { userId: {userId}, userName: {userName} })")
+                .Match("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
+                .Match("(u)-[r:follows]->(t)")
                 .Delete("r")
                 .WithParams(
                     new 
@@ -515,7 +515,7 @@ namespace quizartsocial_backend
 //         };
 //         channel.BasicConsume(queue: "Topic", autoAck: true, consumer: consumer);
 
-//         Console.WriteLine(" Press [enter] to exit.");
+//         Console.WriteLine(" Press [enter] to exit.")Delete;
 //         Console.ReadLine();
 //     }
 // }
