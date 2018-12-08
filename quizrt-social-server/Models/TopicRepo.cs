@@ -131,6 +131,25 @@ namespace quizartsocial_backend
             await query.ExecuteWithoutResultsAsync();
         }
 
+        public async Task DeleteFollowsRelationshipInNeo4j(Follower follower)
+        {
+            var query = graphobj.graph.Cypher
+                .Merge("(u:User { userId: {userId}, userName: {userName} })")
+                .Merge("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
+                .Merge("(u)-[r:follows]->(t)")
+                .Delete("r");
+                // .WithParams(
+                //     new 
+                //     {
+                //         topicId = follower.TopicId,
+                //         topicName = follower.Topic.topicName,
+                //         userName = follower.User.userName,
+                //         userId = follower.UserId
+                //     }
+                // );
+            await query.ExecuteWithoutResultsAsync();
+        }
+
         public async Task CreatePostInNeo4j(Post post)
         {   
             
@@ -195,6 +214,7 @@ namespace quizartsocial_backend
         {
             context.Followers.Remove(follower);
             await context.SaveChangesAsync();
+            await DeleteFollowsRelationshipInNeo4j(follower);
         }
 
         public async Task<List<User>> GetUsersFromUserModelAsync()
