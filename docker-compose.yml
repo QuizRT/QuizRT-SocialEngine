@@ -1,0 +1,39 @@
+version: "3.5"
+services:
+  quizrt-social-db:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Your_password123
+    image: microsoft/mssql-server-linux
+    ports:
+      - "1433:1433"
+    networks:
+      - quizrt-social-server-network
+  quizrt-social-server:
+    build: ./quizrt-social-server
+    labels: 
+      SERVICE_5000_NAME: SocialEngine
+    environment:
+      SQLSERVER_HOST: Server=quizrt-social-db;User=sa;Password=Your_password123
+    depends_on:
+      - quizrt-social-db
+      - neo4j
+    ports:
+      - "7009:5000"
+    networks:
+      - quizrt-social-server-network
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    networks: 
+      - quizrt-social-server-network
+    environment:
+      - NEO4J_AUTH=neo4j/qwertyuiop
+      - NEO4J_dbms_connector_http_listen__address=:7474
+      - NEO4J_dbms_connector_bolt_listen__address=:7687
+networks:
+  quizrt-social-server-network:
+    name: quizrt-network
+    external: true
