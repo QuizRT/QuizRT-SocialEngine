@@ -60,6 +60,15 @@ namespace backEnd.Controllers
             return Ok(posts);
         }
 
+        [HttpGet]
+        [Route("topicsfollowed/{uId}")]
+
+        public async Task<IActionResult> GetTopicsFollowedByUserAsync([FromRoute] string uId)
+        {
+            var topics = await topicObj.GetTopicsFollowedByUserAsync(uId);
+            return Ok(topics);
+        }
+
         [HttpPost]
         [Route("follow")]
         public async Task<IActionResult> FollowTopic(Follower follower)

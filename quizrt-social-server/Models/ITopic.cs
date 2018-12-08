@@ -6,6 +6,7 @@ namespace quizartsocial_backend.Models
 {
     public interface ITopic
     {
+        Task<List<Follower>> GetTopicsFollowedByUserAsync(string uId);
         Task DeleteFollowerAsync(Follower follower);
         Task <List<Follower>> GetFollowersAsync();
         Task<List<User>> GetUsersFromUserModelAsync();

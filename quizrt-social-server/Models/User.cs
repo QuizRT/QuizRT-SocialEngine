@@ -14,7 +14,6 @@ namespace quizartsocial_backend.Models
         public List<Comment> comments { get; set; }
         public List<Follower> FollowedTopics  {get; set; }
         public int topicId {get; set; }
-
     }
 }
 

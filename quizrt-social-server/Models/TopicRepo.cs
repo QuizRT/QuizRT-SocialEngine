@@ -229,6 +229,13 @@ namespace quizartsocial_backend
             return post;
         }
 
+        public async Task<List<Follower>> GetTopicsFollowedByUserAsync(string uId)
+        {
+            var topics = await context.Users.Where(u => u.userId == uId).SelectMany(u => u.FollowedTopics)
+                        .ToListAsync();
+            return topics;
+        }
+
         public async Task<List<Topic>> FetchTopicsFromDbAsync()
         {
             // Followed Topics.
