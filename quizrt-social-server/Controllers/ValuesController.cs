@@ -24,7 +24,8 @@ namespace backEnd.Controllers
         public async Task<IActionResult> GetTopics()
         {
             List<Topic> allTopics = await topicObj.FetchTopicsFromDbAsync();
-            return new OkObjectResult(allTopics);
+            //return new OkObjectResult(allTopics);
+            return Ok(allTopics);
         }
 
         [HttpGet]
