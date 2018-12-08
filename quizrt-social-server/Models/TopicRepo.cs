@@ -90,7 +90,7 @@ namespace quizartsocial_backend
             Console.WriteLine("--------------Made notification obj");
             notification.Message = comment.userId+"is commented on your post";
             Console.WriteLine("----------------Notification message");
-            notification.TargetUrl = "http://172.23.238.164:5002/api/posts/"+comment.postId;
+            notification.TargetUrl = "http://172.23.238.164:7000/social/post/"+comment.postId;
             List<string> listOfUsers = await GetUsersAsync(comment.postId);
             Console.WriteLine("------------List of Users"+listOfUsers);
             notification.Users = listOfUsers;
@@ -137,16 +137,16 @@ namespace quizartsocial_backend
                 .Merge("(u:User { userId: {userId}, userName: {userName} })")
                 .Merge("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
                 .Merge("(u)-[r:follows]->(t)")
-                .Delete("r");
-                // .WithParams(
-                //     new 
-                //     {
-                //         topicId = follower.TopicId,
-                //         topicName = follower.Topic.topicName,
-                //         userName = follower.User.userName,
-                //         userId = follower.UserId
-                //     }
-                // );
+                .Delete("r")
+                .WithParams(
+                    new 
+                    {
+                        topicId = follower.TopicId,
+                        topicName = follower.Topic.topicName,
+                        userName = follower.User.userName,
+                        userId = follower.UserId
+                    }
+                );
             await query.ExecuteWithoutResultsAsync();
         }
 
