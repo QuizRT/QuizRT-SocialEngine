@@ -95,6 +95,15 @@ namespace backEnd.Controllers
         }
 
         [HttpGet]
+        [Route("FollowerDb")]
+
+        public async Task<IActionResult> GetFollowersAsync()
+        {
+            List <Follower> followers = await topicObj.GetFollowersAsync();
+            return Ok(followers);
+        }
+
+        [HttpGet]
         [Route("posts/user/{userId}")]
         public async Task<IActionResult> PersonalisedPosts([FromRoute] string userId)
         {
