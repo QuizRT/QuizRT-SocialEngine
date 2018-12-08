@@ -27,7 +27,7 @@ namespace quizartsocial_backend
         public async Task<bool> IsTopicFollowedByUserAsync(Follower follower)
         {
             var isFollower = await context.Followers.FindAsync(follower.TopicId, follower.UserId);
-            return (isFollower is null) ? true : false;
+            return (isFollower is null) ? false : true;
             // if(isFollower is null)
             // {
             //     return true;
