@@ -69,14 +69,6 @@ namespace backEnd.Controllers
             return Ok(topics);
         }
 
-        [HttpPost]
-        [Route("follow")]
-        public async Task<IActionResult> FollowTopic(Follower follower)
-        {
-            await topicObj.FollowTopic(follower);
-            return Ok();
-        }
-
         [HttpGet]
         [Route("post/{id:int}")]
         public async Task<IActionResult> GetPostByIdAsync([FromRoute] int id)
@@ -120,12 +112,29 @@ namespace backEnd.Controllers
             return Ok(personalisedPosts);   
         }
 
+        [HttpGet]
+        [Route("follow/check")]
+
+        public async Task<IActionResult> IsTopicFollowedByUserAsync(Follower follower)
+        {
+            var isFollowed = await topicObj.IsTopicFollowedByUserAsync(follower);
+            return Ok(isFollowed);
+        }
+
         [HttpPost]
         [Route("post")]
         public async Task<IActionResult> CreatePost([FromBody] Post post)
         {
                 await topicObj.CreatePost(post);
              // await topicObj.AddPostToDBAsync;
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("follow")]
+        public async Task<IActionResult> FollowTopic(Follower follower)
+        {
+            await topicObj.FollowTopic(follower);
             return Ok();
         }
 

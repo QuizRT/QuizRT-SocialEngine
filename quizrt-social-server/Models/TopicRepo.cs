@@ -24,6 +24,20 @@ namespace quizartsocial_backend
             this.graphobj = _graph;
         }
 
+        public async Task<bool> IsTopicFollowedByUserAsync(Follower follower)
+        {
+            var isFollower = await context.Followers.FindAsync(follower.TopicId, follower.UserId);
+            return (isFollower is null) ? true : false;
+            // if(isFollower is null)
+            // {
+            //     return true;
+            // }
+            // else
+            // {
+            //     return false;
+            // }
+        }
+
         public async Task<List<Post>> GetAllPostsForAUser(string userId)
         {
             var posts = await context.Posts.Include("comments").Where(x => x.userId == userId).ToListAsync();
@@ -219,9 +233,6 @@ namespace quizartsocial_backend
         return posts;
         }
 
-            
-
-
         public async Task<Post> GetPostByIdAsyncFromDB(int postId)
         {
             Post post = await context.Posts.Include("comments")
@@ -370,6 +381,8 @@ namespace quizartsocial_backend
  
     }
 }
+
+
 
 /*
         public List<Topic> GetAllTopicImage()
