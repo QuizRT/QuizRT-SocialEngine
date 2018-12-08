@@ -216,8 +216,8 @@ namespace quizartsocial_backend
             // copyFollower = follower;
             copyFollower.TopicId = follower.TopicId;
             copyFollower.UserId = follower.UserId;
-            await DeleteFollowsRelationshipInNeo4j(copyFollower);
-            context.Followers.Remove(follower);
+            await DeleteFollowsRelationshipInNeo4j(follower);
+            context.Followers.Remove(copyFollower);
             await context.SaveChangesAsync();
         }
 
