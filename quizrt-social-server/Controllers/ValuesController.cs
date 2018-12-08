@@ -86,6 +86,15 @@ namespace backEnd.Controllers
         }
 
         [HttpGet]
+        [Route("User/users")]
+
+        public async Task<IActionResult> GetUsersFromUserModelAsync()
+        {
+            List <User> users = await topicObj.GetUsersFromUserModelAsync();
+            return Ok(users);
+        }
+
+        [HttpGet]
         [Route("posts/user/{userId}")]
         public async Task<IActionResult> PersonalisedPosts([FromRoute] string userId)
         {

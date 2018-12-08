@@ -172,6 +172,11 @@ namespace quizartsocial_backend
             return await context.Users.ToListAsync();
         }
 
+        public async Task<List<User>> GetUsersFromUserModelAsync()
+        {
+            return await context.Users.Include("FollowedTopics").ToListAsync();
+        }
+
         public async Task<List<Post>> GetPostsForTopicAsync(string topicName)
         {
             List<Post> posts = await context.Topics
