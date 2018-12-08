@@ -177,6 +177,12 @@ namespace quizartsocial_backend
             return await context.Followers.ToListAsync();
         }
 
+        public async Task DeleteFollowerAsync(Follower follower)
+        {
+            context.Followers.Remove(follower);
+            await context.SaveChangesAsync();
+        }
+
         public async Task<List<User>> GetUsersFromUserModelAsync()
         {
             return await context.Users.Include("FollowedTopics").ToListAsync();

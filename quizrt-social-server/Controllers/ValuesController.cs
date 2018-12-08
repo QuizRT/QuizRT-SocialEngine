@@ -142,6 +142,15 @@ namespace backEnd.Controllers
         }
 
         [HttpDelete]
+        [Route("follow")]
+
+        public async Task<IActionResult> DeleteFollowerAsync(Follower follower)
+        {
+            await topicObj.DeleteFollowerAsync(follower);
+            return Ok();
+        }
+
+        [HttpDelete]
         [Route("topic/{topicName}")]
         public async Task<IActionResult> DeleteTopicAsync([FromRoute] string topicName)
         {
