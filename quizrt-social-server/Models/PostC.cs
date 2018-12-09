@@ -27,7 +27,7 @@ namespace quizartsocial_backend.Models
 
         public Post()
         {
-            
+            //ModifiedDate = DateTime.Now;
         }
     }
 }

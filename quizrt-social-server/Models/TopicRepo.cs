@@ -62,6 +62,7 @@ namespace quizartsocial_backend
                 }
                 else 
                 {
+                    post.ModifiedDate = DateTime.Now;
                     user.posts.Add(post);
                 }
                 await context.SaveChangesAsync();
