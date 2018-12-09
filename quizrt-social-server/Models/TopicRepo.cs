@@ -103,14 +103,14 @@ namespace quizartsocial_backend
         {
 
             try {
-                var followera = context.Followers.Find(new { followerToBeAdded.TopicId, followerToBeAdded.UserId });
-                context.Entry(followera).Reference(t => t.Topic).Load();
-                context.Entry(followera).Reference(t => t.User).Load();
-                Console.WriteLine(followera.User.userId);
-                Console.WriteLine(followera.User.userName);
-                Console.WriteLine(followera.TopicId);
-                Console.WriteLine(followera.UserId);
-                Console.WriteLine(followera.User);
+                // var followera = context.Followers.Find(new { followerToBeAdded.TopicId, followerToBeAdded.UserId });
+                // context.Entry(followera).Reference(t => t.Topic).Load();
+                // context.Entry(followera).Reference(t => t.User).Load();
+                // Console.WriteLine(followera.User.userId);
+                // Console.WriteLine(followera.User.userName);
+                // Console.WriteLine(followera.TopicId);
+                // Console.WriteLine(followera.UserId);
+                // Console.WriteLine(followera.User);
                 Console.WriteLine("------ enter Follow Topic-----");
                 User user = await context.Users.FindAsync(followerToBeAdded.UserId);
                 // Console.WriteLine("-------"+user);
