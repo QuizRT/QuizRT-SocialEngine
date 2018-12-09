@@ -116,6 +116,7 @@ namespace quizartsocial_backend
                 // Console.WriteLine("-------"+user);
                 if(user is null)
                 {
+                    Console.WriteLine("---------------User being added------------");
                     user = new User()
                     {
                         userId = followerToBeAdded.UserId,
@@ -123,12 +124,15 @@ namespace quizartsocial_backend
                     };
                     await context.Users.AddAsync(user);
                 }
+                Console.WriteLine("------------------User added--------------------");
                 var follower = context.Followers.Find(followerToBeAdded.TopicId, followerToBeAdded.UserId);
                 if (follower is null)
                 {
+                    Console.WriteLine("----------Follow being added--------------");
                     follower = followerToBeAdded;
                     context.Followers.Add(follower);
                     await context.SaveChangesAsync();
+                    Console.WriteLine("------------Follow added ----------------");
                 }
                 context.Entry(follower).Reference(t => t.Topic).Load();
                 context.Entry(follower).Reference(t => t.User).Load();
