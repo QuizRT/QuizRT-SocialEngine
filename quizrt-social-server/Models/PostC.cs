@@ -21,5 +21,9 @@ namespace quizartsocial_backend.Models
         {
             return JsonConvert.SerializeObject(this);
         }
+        public Post()
+        {
+            
+        }
     }
 }

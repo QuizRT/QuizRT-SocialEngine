@@ -154,7 +154,6 @@ namespace quizartsocial_backend
                     .Match("(u:User { userId: {userId}, userName: {userName} })")
                     .Match("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
                     .Match("(u)-[r:follows]->(t)")
-                    .Delete("r")
                     .WithParams(
                         new 
                         {
@@ -163,7 +162,8 @@ namespace quizartsocial_backend
                             userName = follower.User.userName,
                             userId = follower.UserId
                         }
-                    );
+                    )
+                    .Delete("r");
                 await query.ExecuteWithoutResultsAsync();
             }
             catch(Exception e)

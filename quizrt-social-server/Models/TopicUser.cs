@@ -8,5 +8,9 @@ namespace quizartsocial_backend.Models
         public Topic Topic { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
+        public Follower()
+        {
+            
+        }
     }
 }
