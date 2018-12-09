@@ -136,7 +136,7 @@ namespace backEnd.Controllers
         public async Task<IActionResult> FollowTopic(Follower follower)
         {
             Console.WriteLine(JsonConvert.SerializeObject(follower));
-            // await topicObj.FollowTopic(follower);
+             await topicObj.FollowTopic(follower);
             return Ok();
         }
 
