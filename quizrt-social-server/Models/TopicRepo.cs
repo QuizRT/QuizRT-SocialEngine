@@ -133,7 +133,8 @@ namespace quizartsocial_backend
 
         public async Task DeleteFollowsRelationshipInNeo4j(Follower follower)
         {
-            Console.WriteLine(follower.User);
+            Console.WriteLine(follower.UserId);
+            Console.WriteLine(follower.TopicId);
             var query = graphobj.graph.Cypher
                 .Match("(u:User { userId: {userId}, userName: {userName} })")
                 .Match("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
