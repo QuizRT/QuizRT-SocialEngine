@@ -102,6 +102,8 @@ namespace quizartsocial_backend
         public async Task FollowTopic(Follower followerToBeAdded)
         {
             try{
+                context.Entry(followerToBeAdded).Reference(t => t.Topic).Load();
+                context.Entry(followerToBeAdded).Reference(t => t.User).Load();
                 Console.WriteLine(followerToBeAdded.User.userId);
                 Console.WriteLine(followerToBeAdded.User.userName);
                 Console.WriteLine(followerToBeAdded.TopicId);
