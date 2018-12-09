@@ -126,7 +126,15 @@ namespace backEnd.Controllers
         [Route("post")]
         public async Task<IActionResult> CreatePost([FromBody] Post post)
         {
+            try
+            {
                 await topicObj.CreatePost(post);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("---------post controller--------"+e.Message);
+                Console.WriteLine("---------post controller--------"+e.StackTrace);
+            }
              // await topicObj.AddPostToDBAsync;
             return Ok();
         }

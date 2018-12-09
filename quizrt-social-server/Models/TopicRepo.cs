@@ -47,23 +47,31 @@ namespace quizartsocial_backend
 
         public async Task CreatePost(Post post)
         {
-            var user = await context.Users.Include(u => u.posts).Where(t => t.userId == post.userId).FirstOrDefaultAsync();
-            if (user is null)
+            try
             {
-                user = new User()
+                var user = await context.Users.Include(u => u.posts).Where(t => t.userId == post.userId).FirstOrDefaultAsync();
+                if (user is null)
                 {
-                    userId = post.userId,
-                    userName = post.userName,
-                    posts = new List<Post>() { post },
-                };
-                await context.Users.AddAsync(user);
+                    user = new User()
+                    {
+                        userId = post.userId,
+                        userName = post.userName,
+                        posts = new List<Post>() { post },
+                    };
+                    await context.Users.AddAsync(user);
+                }
+                else 
+                {
+                    user.posts.Add(post);
+                }
+                await context.SaveChangesAsync();
+                await CreatePostInNeo4j(post);
             }
-            else 
+            catch(Exception e)
             {
-                user.posts.Add(post);
+                Console.WriteLine("---------post controller--------"+e.Message);
+                Console.WriteLine("---------post controller--------"+e.StackTrace);
             }
-            await context.SaveChangesAsync();
-            await CreatePostInNeo4j(post);
         }
 
         public async Task CreateComment(Comment comment)
