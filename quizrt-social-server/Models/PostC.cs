@@ -17,7 +17,7 @@ namespace quizartsocial_backend.Models
         public string userName { get; set; }
         public Topic topic { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+       // [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime ModifiedDate { get; set; }
 
         public override string ToString()
