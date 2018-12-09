@@ -104,7 +104,7 @@ namespace quizartsocial_backend
             Console.WriteLine("------ enter Follow Topic-----");
             var user = await context.Users.Where(t => t.userId == followerToBeAdded.User.userId)
             .FirstOrDefaultAsync();
-            Console.WriteLine("-------"+user);
+            // Console.WriteLine("-------"+user);
             if(user is null)
             {
                 user = new User()
