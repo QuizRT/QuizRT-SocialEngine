@@ -101,6 +101,17 @@ namespace quizartsocial_backend
 
         public async Task FollowTopic(Follower followerToBeAdded)
         {
+            var user = await context.Users.Where(t => t.userId == followerToBeAdded.User.userId)
+            .FirstOrDefaultAsync();
+            if(user is null)
+            {
+                user = new User()
+                {
+                    userId = followerToBeAdded.User.userId,
+                    userName = followerToBeAdded.User.userName,
+                };
+                await context.Users.AddAsync(user);
+            }
             var follower = context.Followers.Find(followerToBeAdded.TopicId, followerToBeAdded.UserId);
             if (follower is null)
             {
