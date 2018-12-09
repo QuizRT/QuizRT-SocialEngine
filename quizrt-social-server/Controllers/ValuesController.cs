@@ -187,7 +187,6 @@ namespace backEnd.Controllers
             try
             {
                 await topicObj.DeleteFollowerAsync(follower);
-                return Ok();
             }
             catch(Exception e)
             {
