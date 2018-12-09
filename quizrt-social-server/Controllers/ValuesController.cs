@@ -118,6 +118,8 @@ namespace backEnd.Controllers
 
         public async Task<IActionResult> IsTopicFollowedByUserAsync(Follower follower)
         {
+            Console.WriteLine("--------------------------"+follower.TopicId);
+            Console.WriteLine("---------------------------"+follower.UserId);
             var isFollowed = await topicObj.IsTopicFollowedByUserAsync(follower);
             return Ok(isFollowed);
         }
