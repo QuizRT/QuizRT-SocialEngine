@@ -118,10 +118,19 @@ namespace backEnd.Controllers
 
         public async Task<IActionResult> IsTopicFollowedByUserAsync(Follower follower)
         {
-            Console.WriteLine("--------------------------"+follower.TopicId);
-            Console.WriteLine("---------------------------"+follower.UserId);
-            var isFollowed = await topicObj.IsTopicFollowedByUserAsync(follower);
-            return Ok(isFollowed);
+            try
+            {
+                Console.WriteLine("--------FollowerTopicId------------------"+follower.TopicId);
+                Console.WriteLine("--------FollowerUserId------------------"+follower.UserId);
+                var isFollowed = await topicObj.IsTopicFollowedByUserAsync(follower);
+                return Ok(isFollowed);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("-----------Inside is topic followed--------"+ e.Message);
+                Console.WriteLine("-----------Inside is topic followed--------"+ e.StackTrace);
+            }
+            return Ok();
         }
 
         [HttpPost]
@@ -175,7 +184,16 @@ namespace backEnd.Controllers
         [Route("follow")]
         public async Task<IActionResult> DeleteFollowerAsync(Follower follower)
         {
-            await topicObj.DeleteFollowerAsync(follower);
+            try
+            {
+                await topicObj.DeleteFollowerAsync(follower);
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("-----------Inside delete follower--------"+ e.Message);
+                Console.WriteLine("-----------Inside delete follower--------"+ e.StackTrace);
+            }
             return Ok();
         }
 
