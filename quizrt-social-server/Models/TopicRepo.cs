@@ -167,6 +167,8 @@ namespace quizartsocial_backend
                 // await query.ExecuteWithoutResultsAsync();
                 var query = graphobj.graph.Cypher
                 .Match("(u:User)-[r:follows]->(t:Topic)")
+                .Where((User u) => u.userId == follower.UserId)
+                .AndWhere((Topic t) => t.topicId == follower.TopicId)
                 .Delete("r");
                 await query.ExecuteWithoutResultsAsync();
             }
