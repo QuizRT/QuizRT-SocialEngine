@@ -146,23 +146,31 @@ namespace quizartsocial_backend
 
         public async Task DeleteFollowsRelationshipInNeo4j(Follower follower)
         {
-            Console.WriteLine(follower.UserId);
-            Console.WriteLine(follower.TopicId);
-            var query = graphobj.graph.Cypher
-                .Match("(u:User { userId: {userId}, userName: {userName} })")
-                .Match("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
-                .Match("(u)-[r:follows]->(t)")
-                .Delete("r")
-                .WithParams(
-                    new 
-                    {
-                        topicId = follower.TopicId,
-                        topicName = follower.Topic.topicName,
-                        userName = follower.User.userName,
-                        userId = follower.UserId
-                    }
-                );
-            await query.ExecuteWithoutResultsAsync();
+            try
+            {
+                Console.WriteLine(follower.UserId);
+                Console.WriteLine(follower.TopicId);
+                var query = graphobj.graph.Cypher
+                    .Match("(u:User { userId: {userId}, userName: {userName} })")
+                    .Match("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
+                    .Match("(u)-[r:follows]->(t)")
+                    .Delete("r")
+                    .WithParams(
+                        new 
+                        {
+                            topicId = follower.TopicId,
+                            topicName = follower.Topic.topicName,
+                            userName = follower.User.userName,
+                            userId = follower.UserId
+                        }
+                    );
+                await query.ExecuteWithoutResultsAsync();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
         }
 
         public async Task CreatePostInNeo4j(Post post)
