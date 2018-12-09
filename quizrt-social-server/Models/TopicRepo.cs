@@ -150,20 +150,24 @@ namespace quizartsocial_backend
             {
                 Console.WriteLine(follower.UserId);
                 Console.WriteLine(follower.TopicId);
+                // var query = graphobj.graph.Cypher
+                //     .Match("(u:User { userId: {userId}, userName: {userName} })")
+                //     .Match("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
+                //     .Match("(u)-[r:follows]->(t)")
+                //     .WithParams(
+                //         new 
+                //         {
+                //             topicId = follower.TopicId,
+                //             topicName = follower.Topic.topicName,
+                //             userName = follower.User.userName,
+                //             userId = follower.UserId
+                //         }
+                //     )
+                //     .Delete("r");
+                // await query.ExecuteWithoutResultsAsync();
                 var query = graphobj.graph.Cypher
-                    .Match("(u:User { userId: {userId}, userName: {userName} })")
-                    .Match("(t:Topic { topicId: {topicId}, topicName: {topicName} })")
-                    .Match("(u)-[r:follows]->(t)")
-                    .WithParams(
-                        new 
-                        {
-                            topicId = follower.TopicId,
-                            topicName = follower.Topic.topicName,
-                            userName = follower.User.userName,
-                            userId = follower.UserId
-                        }
-                    )
-                    .Delete("r");
+                .Match("(u:User)-[r:follows]->(t:Topic)")
+                .Delete("r");
                 await query.ExecuteWithoutResultsAsync();
             }
             catch(Exception e)
