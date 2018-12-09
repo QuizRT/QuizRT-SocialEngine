@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using quizartsocial_backend.Models;
 using quizartsocial_backend.Services;
 
@@ -134,7 +135,8 @@ namespace backEnd.Controllers
         [Route("follow")]
         public async Task<IActionResult> FollowTopic(Follower follower)
         {
-            await topicObj.FollowTopic(follower);
+            Console.WriteLine(JsonConvert.SerializeObject(follower));
+            // await topicObj.FollowTopic(follower);
             return Ok();
         }
 

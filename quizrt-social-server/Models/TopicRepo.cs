@@ -101,22 +101,24 @@ namespace quizartsocial_backend
 
         public async Task FollowTopic(Follower followerToBeAdded)
         {
-            try{
-                context.Entry(followerToBeAdded).Reference(t => t.Topic).Load();
-                context.Entry(followerToBeAdded).Reference(t => t.User).Load();
-                Console.WriteLine(followerToBeAdded.User.userId);
-                Console.WriteLine(followerToBeAdded.User.userName);
-                Console.WriteLine(followerToBeAdded.TopicId);
-                Console.WriteLine(followerToBeAdded.UserId);
-                Console.WriteLine(followerToBeAdded.User);
+
+            try {
+                var followera = context.Followers.Find(new { followerToBeAdded.TopicId, followerToBeAdded.UserId });
+                context.Entry(followera).Reference(t => t.Topic).Load();
+                context.Entry(followera).Reference(t => t.User).Load();
+                Console.WriteLine(followera.User.userId);
+                Console.WriteLine(followera.User.userName);
+                Console.WriteLine(followera.TopicId);
+                Console.WriteLine(followera.UserId);
+                Console.WriteLine(followera.User);
                 Console.WriteLine("------ enter Follow Topic-----");
-                User user = await context.Users.FindAsync(followerToBeAdded.User.userId);
+                User user = await context.Users.FindAsync(followerToBeAdded.UserId);
                 // Console.WriteLine("-------"+user);
                 if(user is null)
                 {
                     user = new User()
                     {
-                        userId = followerToBeAdded.User.userId,
+                        userId = followerToBeAdded.UserId,
                         userName = followerToBeAdded.User.userName,
                     };
                     await context.Users.AddAsync(user);
