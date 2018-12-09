@@ -101,28 +101,35 @@ namespace quizartsocial_backend
 
         public async Task FollowTopic(Follower followerToBeAdded)
         {
-            Console.WriteLine("------ enter Follow Topic-----");
-            var user = await context.Users.FindAsync(followerToBeAdded.User.userId);
-            // Console.WriteLine("-------"+user);
-            if(user is null)
-            {
-                user = new User()
+            try{
+                Console.WriteLine("------ enter Follow Topic-----");
+                var user = await context.Users.FindAsync(followerToBeAdded.User.userId);
+                // Console.WriteLine("-------"+user);
+                if(user is null)
                 {
-                    userId = followerToBeAdded.User.userId,
-                    userName = followerToBeAdded.User.userName,
-                };
-                await context.Users.AddAsync(user);
+                    user = new User()
+                    {
+                        userId = followerToBeAdded.User.userId,
+                        userName = followerToBeAdded.User.userName,
+                    };
+                    await context.Users.AddAsync(user);
+                }
+                var follower = context.Followers.Find(followerToBeAdded.TopicId, followerToBeAdded.UserId);
+                if (follower is null)
+                {
+                    follower = followerToBeAdded;
+                    context.Followers.Add(follower);
+                    await context.SaveChangesAsync();
+                }
+                context.Entry(follower).Reference(t => t.Topic).Load();
+                context.Entry(follower).Reference(t => t.User).Load();
+                await CreateFollowsRelationshiopInNeo4j(follower);
             }
-            var follower = context.Followers.Find(followerToBeAdded.TopicId, followerToBeAdded.UserId);
-            if (follower is null)
+            catch(Exception e)
             {
-                follower = followerToBeAdded;
-                context.Followers.Add(follower);
-                await context.SaveChangesAsync();
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
-            context.Entry(follower).Reference(t => t.Topic).Load();
-            context.Entry(follower).Reference(t => t.User).Load();
-            await CreateFollowsRelationshiopInNeo4j(follower);
         }
 
         public async Task CreateFollowsRelationshiopInNeo4j(Follower follower)
