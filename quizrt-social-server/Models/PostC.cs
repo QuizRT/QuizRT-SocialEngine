@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,13 +15,16 @@ namespace quizartsocial_backend.Models
         public int topicId { get; set; }
         public string userId { get; set; }
         public string userName { get; set; }
-
         public Topic topic { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime ModifiedDate { get; set; }
 
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
         }
+
         public Post()
         {
             
